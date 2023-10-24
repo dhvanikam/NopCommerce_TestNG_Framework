@@ -8,8 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import com.baseClass.BaseClass;
 import com.controllerInterface.ControllerInterface;
 
-public class Controller extends BaseClass implements ControllerInterface{
-
+public class Controller extends BaseClass implements ControllerInterface {
 
 	Actions action = new Actions(driver);
 	Select select;
@@ -22,7 +21,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 			System.out.println(e);
 		}
 	}
-
 
 	@Override
 	public boolean type(WebElement element, String text) {
@@ -45,19 +43,17 @@ public class Controller extends BaseClass implements ControllerInterface{
 		return flag;
 	}
 
-
-
 	@Override
 	public boolean isDisplayed(WebDriver driver, WebElement element) {
 		boolean flag = false;
 		try {
-			if (element.isDisplayed()) {				
+			if (element.isDisplayed()) {
 				flag = true;
-				System.out.println("The element is Displayed"+element);
+				System.out.println("The element is Displayed" + element);
 
 			} else {
 				flag = false;
-				System.out.println("The element is not Displayed"+element);
+				System.out.println("The element is not Displayed" + element);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -65,13 +61,11 @@ public class Controller extends BaseClass implements ControllerInterface{
 		return flag;
 	}
 
-
-
 	@Override
 	public boolean isSelected(WebDriver driver, WebElement element) {
 		boolean flag = false;
 		try {
-			if (element.isSelected()) {				
+			if (element.isSelected()) {
 				flag = true;
 				System.out.println("The element is Selected");
 
@@ -85,12 +79,11 @@ public class Controller extends BaseClass implements ControllerInterface{
 		return flag;
 	}
 
-
 	@Override
 	public boolean isEnabled(WebDriver driver, WebElement element) {
 		boolean flag = false;
 		try {
-			if (element.isEnabled()) {				
+			if (element.isEnabled()) {
 				flag = true;
 				System.out.println("The element is Enabled");
 
@@ -103,8 +96,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		}
 		return flag;
 	}
-
-
 
 	@Override
 	public boolean selectByIndex(WebElement element, int index) {
@@ -127,7 +118,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		return flag;
 	}
 
-
 	@Override
 	public boolean selectByValue(WebElement element, String value) {
 		boolean flag = false;
@@ -148,8 +138,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		}
 		return flag;
 	}
-
-
 
 	@Override
 	public boolean selectByVisibleText(String visibletext, WebElement element) {
@@ -172,8 +160,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		return flag;
 	}
 
-
-
 	@Override
 	public boolean switchToFrameByIndex(WebDriver driver, int index) {
 		boolean flag = false;
@@ -191,8 +177,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		}
 		return flag;
 	}
-
-
 
 	@Override
 	public boolean switchToFrameById(WebDriver driver, String idValue) {
@@ -212,8 +196,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		return flag;
 	}
 
-
-
 	@Override
 	public boolean switchToFrameByName(WebDriver driver, String nameValue) {
 		boolean flag = false;
@@ -231,8 +213,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		}
 		return flag;
 	}
-
-
 
 	@Override
 	public boolean switchToDefaultFrame(WebDriver driver) {
@@ -252,16 +232,14 @@ public class Controller extends BaseClass implements ControllerInterface{
 		return flag;
 	}
 
-
 	@Override
 	public void moveToElement(WebDriver driver, WebElement element) {
 		try {
-			action.moveToElement(element).click().build().perform();	
+			action.moveToElement(element).click().build().perform();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
-
 
 	@Override
 	public void rightclick(WebDriver driver, WebElement element) {
@@ -272,7 +250,6 @@ public class Controller extends BaseClass implements ControllerInterface{
 		}
 	}
 
-
 	@Override
 	public void Alert(WebDriver driver) {
 		try {
@@ -282,14 +259,13 @@ public class Controller extends BaseClass implements ControllerInterface{
 		}
 	}
 
-
 	@Override
 	public String getTitle(WebDriver driver) {
 		return driver.getTitle();
 	}
 
 	@Override
-	public String getCurrentURL(WebDriver driver)  {
+	public String getCurrentURL(WebDriver driver) {
 		return driver.getCurrentUrl();
 
 	}
@@ -298,20 +274,16 @@ public class Controller extends BaseClass implements ControllerInterface{
 	public String getText(WebElement element) {
 		String textValue = "";
 		try {
-		if(element.isDisplayed()) {
-			textValue=element.getText();
-			System.out.println("Text value:- "+textValue);
-		}
-		else {
-			System.out.println("Element is not visible");
-		}
-		}catch (Exception e) {
+			if (element.isDisplayed()) {
+				textValue = element.getText();
+				System.out.println("Text value:- " + textValue);
+			} else {
+				System.out.println("Element is not visible");
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return textValue;
 	}
 
-
-
 }
-
