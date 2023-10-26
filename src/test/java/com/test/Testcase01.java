@@ -15,7 +15,7 @@ public class Testcase01 extends BaseClass {
 	}
 
 	@Test
-	public void test_ComputersTab() throws InterruptedException {
+	public void test_ComputersTab()  {
 		page.getURL();
 		page.clickComputerTab();
 	}

@@ -25,13 +25,10 @@ public class Page extends BaseClass {
 		Log.logInfo("Get Base URL" + baseURL);
 	}
 
-	public void clickComputerTab() throws InterruptedException {
+	public void clickComputerTab(){
 		driver.get(baseURL);
 		Log.logInfo("Get Base URL" + baseURL);
-		//Thread.sleep(2000);
 		click(driver, menu_computers);
-		//menu_computers.click();
-		//Thread.sleep(2000);
 		Log.logInfo("Click on Menu Computers");
 		Log.logInfo(driver.getCurrentUrl());
 	}
