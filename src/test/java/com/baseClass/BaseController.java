@@ -20,12 +20,11 @@ public class BaseController implements ControllerInterface {
 	public static WebDriver driver;
 	public static String browserName = readconfig.getbrowser();
 
-	public WebDriver Initialization() {
-		System.out.println(browserName);
+	public void Initialization() {
+
 		if (browserName.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
-			System.out.println("Initilizing chrome driver");
 		}
 
 		else if (browserName.equalsIgnoreCase("firefox")) {
@@ -42,7 +41,6 @@ public class BaseController implements ControllerInterface {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
 
-		return driver;
 	}
 
 	public void teardown() {
