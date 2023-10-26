@@ -1,22 +1,65 @@
-package com.controller;
+package com.baseClass;
 
+import java.time.Duration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-import com.baseClass.BaseClass;
 import com.controllerInterface.ControllerInterface;
+import com.utility.Readconfig;
 
-public class Controller extends BaseClass implements ControllerInterface {
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-	Actions action = new Actions(driver);
-	Select select;
+public class BaseController implements ControllerInterface {
+	static Readconfig readconfig = new Readconfig();
+	public static String baseURL = readconfig.getApplicationURL();
+	public static WebDriver driver;
+	public static String browserName = readconfig.getbrowser();
+
+	public WebDriver Initialization() {
+		System.out.println(browserName);
+		if (browserName.equalsIgnoreCase("chrome")) {
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+			System.out.println("Initilizing chrome driver");
+		}
+
+		else if (browserName.equalsIgnoreCase("firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		}
+
+		else if (browserName.equalsIgnoreCase("edge")) {
+			WebDriverManager.edgedriver().setup();
+			driver = new EdgeDriver();
+		}
+
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+
+		return driver;
+	}
+
+	public void teardown() {
+		driver.close();
+	}
+
+	public WebDriver getDriver() {
+		return driver;
+
+	}
 
 	@Override
 	public void click(WebDriver driver, WebElement element) {
+		Actions action = new Actions(driver);
 		try {
 			action.moveToElement(element).click().build().perform();
+			System.out.println("Clicking on element : BaseController");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -99,6 +142,7 @@ public class Controller extends BaseClass implements ControllerInterface {
 
 	@Override
 	public boolean selectByIndex(WebElement element, int index) {
+		Select select;
 		boolean flag = false;
 		try {
 			if (element.isDisplayed()) {
@@ -120,6 +164,7 @@ public class Controller extends BaseClass implements ControllerInterface {
 
 	@Override
 	public boolean selectByValue(WebElement element, String value) {
+		Select select;
 		boolean flag = false;
 		try {
 			if (element.isDisplayed()) {
@@ -141,6 +186,7 @@ public class Controller extends BaseClass implements ControllerInterface {
 
 	@Override
 	public boolean selectByVisibleText(String visibletext, WebElement element) {
+		Select select;
 		boolean flag = false;
 		try {
 			if (element.isDisplayed()) {
@@ -234,6 +280,7 @@ public class Controller extends BaseClass implements ControllerInterface {
 
 	@Override
 	public void moveToElement(WebDriver driver, WebElement element) {
+		Actions action = new Actions(driver);
 		try {
 			action.moveToElement(element).click().build().perform();
 		} catch (Exception e) {
@@ -243,6 +290,7 @@ public class Controller extends BaseClass implements ControllerInterface {
 
 	@Override
 	public void rightclick(WebDriver driver, WebElement element) {
+		Actions action = new Actions(driver);
 		try {
 			action.contextClick(element).perform();
 		} catch (Exception e) {
