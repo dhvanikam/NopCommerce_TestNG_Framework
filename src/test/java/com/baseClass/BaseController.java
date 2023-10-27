@@ -1,6 +1,13 @@
 package com.baseClass;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,6 +17,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import com.controllerInterface.ControllerInterface;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.utility.Readconfig;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -19,6 +28,7 @@ public class BaseController implements ControllerInterface {
 	public static String baseURL = readconfig.getApplicationURL();
 	public static WebDriver driver;
 	public static String browserName = readconfig.getbrowser();
+	public static String loginURL = readconfig.getLoginUrl();
 
 	public void Initialization() {
 
@@ -52,6 +62,20 @@ public class BaseController implements ControllerInterface {
 
 	}
 
+	public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
+		// read json to string
+		String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+
+		// String to HashMap- Jackson Databind
+
+		ObjectMapper mapper = new ObjectMapper();
+		List<HashMap<String, String>> data = mapper.readValue(jsonContent,
+				new TypeReference<List<HashMap<String, String>>>() {
+				});
+		return data;
+
+	}
+
 	@Override
 	public void click(WebDriver driver, WebElement element) {
 		Actions action = new Actions(driver);
@@ -61,6 +85,22 @@ public class BaseController implements ControllerInterface {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+
+	@Override
+	public String getText(WebElement element) {
+		String textValue = "";
+		try {
+			if (element.isDisplayed()) {
+				textValue = element.getText();
+				System.out.println("Text value:- " + textValue);
+			} else {
+				System.out.println("Element is not visible");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return textValue;
 	}
 
 	@Override
@@ -314,22 +354,6 @@ public class BaseController implements ControllerInterface {
 	public String getCurrentURL(WebDriver driver) {
 		return driver.getCurrentUrl();
 
-	}
-
-	@Override
-	public String getText(WebElement element) {
-		String textValue = "";
-		try {
-			if (element.isDisplayed()) {
-				textValue = element.getText();
-				System.out.println("Text value:- " + textValue);
-			} else {
-				System.out.println("Element is not visible");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return textValue;
 	}
 
 }

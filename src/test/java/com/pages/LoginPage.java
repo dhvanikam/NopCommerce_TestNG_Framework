@@ -1,50 +1,46 @@
 package com.pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
-	WebDriver driver;
+import com.baseClass.BaseClass;
+import com.utility.Log;
 
-	public LoginPage(WebDriver driver) {
-		this.driver = driver;
+public class LoginPage extends BaseClass {
+
+	public LoginPage() {
 		PageFactory.initElements(driver, this);
 	}
-
-	
 	
 	@FindBy(xpath="//input[@id='Email']")
-	//@FindBy(id="Email")
 	WebElement userEmail;
 	
 	@FindBy(xpath="//input[@id='Password']")
-	//@FindBy(id="Password")
 	WebElement passwordEle;
 	
-	//@FindBy(xpath="*[contains(@class,'login-button')]")
 	@FindBy(xpath="//button[@class='button-1 login-button']")
 	WebElement submit;
-	@FindBy(xpath="*[contains(@class,'message-error')]")
+	@FindBy(xpath="//div[@class='message-error validation-summary-errors']")
 	WebElement errorMessage;
 
 	public void loginApplication(String email, String password) {
+		driver.get(loginURL);
 		userEmail.sendKeys(email);
 		passwordEle.sendKeys(password);
-		submit.click();
-		//ProductCatalogue productCatalogue = new ProductCatalogue(driver);
-		//return productCatalogue;
+		click(driver, submit);
+		Log.logInfo("Click on Login Button");
+		Log.logInfo(driver.getCurrentUrl());
 
 	}
-
 	public String getErrorMessage() {
-		//waitForWebElementToAppear(errorMessage);
-		return errorMessage.getText();
+		Log.logInfo(getText(errorMessage));
+		return getText(errorMessage);
 	}
 
-	public void goTo() {
-		//loginUrl=readconfig.getLoginUrl();
-		//driver.get("https://rahulshettyacademy.com/client");
+	public void goToLoginPage() {
+		driver.get(loginURL);
+		Log.logInfo("We are in Login Page");
+		Log.logInfo(driver.getCurrentUrl());
 	}
 }
