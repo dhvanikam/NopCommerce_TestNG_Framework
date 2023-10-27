@@ -24,7 +24,11 @@ public class Readconfig {
 		String url = pro.getProperty("url");
 		return url;
 	}
-	
+	//get LoginUrl from config
+	public String getLoginUrl() {
+		String url = pro.getProperty("loginUrl");
+		return url;
+	}
 	//get browser from config
 	public String getbrowser() {
 		String browser = pro.getProperty("browser");

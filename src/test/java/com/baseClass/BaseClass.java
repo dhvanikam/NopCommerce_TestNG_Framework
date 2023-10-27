@@ -8,7 +8,6 @@ public class BaseClass extends BaseController {
 	@BeforeMethod
 	public void beforeMethod() {
 		Initialization();
-
 	}
 
 	@AfterMethod
