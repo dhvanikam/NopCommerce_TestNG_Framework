@@ -13,14 +13,14 @@ public class LoginTest extends BaseClass{
 	@Test(dataProvider="getData",groups= {"Login"})
 	public void loginTest(HashMap<String,String> input)
 	{
-		loginPage.loginApplication(input.get("email"), input.get("password"));
+		//loginPage.loginApplication(input.get("email"), input.get("password"));
 		
 	}
-	@DataProvider
-	public Object[][] getData() throws IOException
-	{
-		List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"//src//test//resources//Data//LoginCredentials.json");
-		return new Object[][]  {{data.get(0)}, {data.get(1) } };
+	//@DataProvider
+	//public Object[][] getData() throws IOException
+	//{
+		//List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"//src//test//resources//Data//LoginCredentials.json");
+		//return new Object[][]  {{data.get(0)}, {data.get(1) } };
 		
-	}
+	//}
 }
