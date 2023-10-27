@@ -5,6 +5,7 @@
 		<classes>
 			<class name="com.test.Testcase" />
 			<class name="com.test.Testcase01" />
+			<class name="com.test.LoginTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
