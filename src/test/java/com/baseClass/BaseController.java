@@ -10,13 +10,16 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.controllerInterface.ControllerInterface;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,6 +32,7 @@ public class BaseController implements ControllerInterface {
 	static Readconfig readconfig = new Readconfig();
 	public static String baseURL = readconfig.getApplicationURL();
 	public static WebDriver driver;
+	public WebDriverWait wait;
 	public static String browserName = readconfig.getbrowser();
 	public static String loginURL = readconfig.getLoginUrl();
 
@@ -87,14 +91,37 @@ public class BaseController implements ControllerInterface {
 	}
 
 	@Override
-	public void click(WebDriver driver, WebElement element) {
-		Actions action = new Actions(driver);
+	public boolean click(WebDriver driver, WebElement element) {
 		try {
-			action.moveToElement(element).click().build().perform();
-			System.out.println("Clicking on element : BaseController");
-		} catch (Exception e) {
-			System.out.println(e);
+			WebElement ele = new WebDriverWait(driver, Duration.ofSeconds(10)).
+					until(ExpectedConditions.visibilityOf(element));
+			
+			if(ele.isDisplayed()) {
+				if(ele.isEnabled()) {
+					try {
+						ele.click();
+						Actions action = new Actions(driver);
+						action.moveToElement(ele);
+						action.click(ele);				
+						return true;
+					}
+					catch(Exception e) {
+						JavascriptExecutor js = ((JavascriptExecutor) driver);
+						js.executeScript("arguments[0].click();", ele);
+					}	
+				}
+				else {
+					throw new Exception("Element is not enabled");
+				}
+			}
+			else {
+				throw new Exception("Element is not displayed");
+			}
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@Override

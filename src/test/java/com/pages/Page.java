@@ -1,13 +1,13 @@
 package com.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import com.baseClass.BaseClass;
-import com.baseClass.BaseController;
+
 
 import com.utility.Log;
 
@@ -28,7 +28,7 @@ public class Page extends BaseClass {
 	public void clickComputerTab(){
 		driver.get(baseURL);
 		Log.logInfo("Get Base URL" + baseURL);
-		click(driver, menu_computers);
+		Assert.assertTrue(click(driver, menu_computers),"Can not click");
 		Log.logInfo("Click on Menu Computers");
 		Log.logInfo(driver.getCurrentUrl());
 	}

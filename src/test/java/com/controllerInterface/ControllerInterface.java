@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 public interface ControllerInterface {
 
 	//Created abstract methods for all user action
-	public void click(WebDriver driver, WebElement element);
+	public boolean click(WebDriver driver, WebElement element);
 	public boolean isDisplayed(WebDriver driver, WebElement element);
 	public boolean type(WebElement element, String text);
 	public boolean isSelected(WebDriver driver, WebElement element);
