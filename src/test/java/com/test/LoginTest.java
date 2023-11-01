@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,15 +22,11 @@ public class LoginTest extends BaseClass {
 		loginPage = new LoginPage();
 	}
 
-	@Test(dataProvider = "getData", groups = { "Login" })
+	@Test(dataProvider = "getData", groups = { "Login" },retryAnalyzer=Retry.class )//,retryAnalyzer=Retry.class 
 	public void loginTest(HashMap<String, String> input) {
 
 		loginPage.loginApplication(input.get("email"), input.get("password"));
-		String errorMsg = loginPage.getErrorMessage();
-		if (errorMsg == "")
-			Log.logInfo("Success full Login");
-		else
-			Log.logInfo(errorMsg);
+		Assert.assertEquals("Login was unsuccessful. Please correct the errors and try again.",loginPage.getErrorMessage());
 
 	}
 
@@ -38,6 +35,5 @@ public class LoginTest extends BaseClass {
 		List<HashMap<String, String>> data = getJsonDataToMap(
 				System.getProperty("user.dir") + "//src//test//resources//Data//LoginCredentials.json");
 		return new Object[][] { { data.get(0) }, { data.get(1) } };
-
 	}
 }

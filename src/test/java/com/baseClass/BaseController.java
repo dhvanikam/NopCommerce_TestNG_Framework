@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -31,6 +33,7 @@ public class BaseController implements ControllerInterface {
 	public static String loginURL = readconfig.getLoginUrl();
 
 	public void Initialization() {
+		browserName = System.getProperty("browser") != null ? System.getProperty("browser") : readconfig.getbrowser();
 
 		if (browserName.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
@@ -67,13 +70,20 @@ public class BaseController implements ControllerInterface {
 		String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
 
 		// String to HashMap- Jackson Databind
-
 		ObjectMapper mapper = new ObjectMapper();
 		List<HashMap<String, String>> data = mapper.readValue(jsonContent,
 				new TypeReference<List<HashMap<String, String>>>() {
 				});
 		return data;
 
+	}
+
+	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+		FileUtils.copyFile(source, file);
+		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
 	}
 
 	@Override

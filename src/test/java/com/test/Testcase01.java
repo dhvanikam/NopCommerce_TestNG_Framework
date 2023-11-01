@@ -14,7 +14,7 @@ public class Testcase01 extends BaseClass {
 		page = new Page();
 	}
 
-	@Test
+	@Test()
 	public void test_ComputersTab()  {
 		page.getURL();
 		page.clickComputerTab();
