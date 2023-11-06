@@ -24,6 +24,9 @@ public class LoginPage extends BaseClass {
 	@FindBy(xpath="//div[@class='message-error validation-summary-errors']")
 	WebElement errorMessage;
 
+	@FindBy(xpath="//*[text()=\"Checkout as Guest\"]")
+	WebElement checkOutAsGuest;
+
 	public void loginApplication(String email, String password) {
 		driver.get(loginURL);
 		userEmail.sendKeys(email);
@@ -42,5 +45,9 @@ public class LoginPage extends BaseClass {
 		driver.get(loginURL);
 		Log.logInfo("We are in Login Page");
 		Log.logInfo(driver.getCurrentUrl());
+	}
+	public void clickOnCheckOutAsGuest()
+	{
+		click(driver,checkOutAsGuest);
 	}
 }
